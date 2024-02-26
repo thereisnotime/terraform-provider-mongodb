@@ -6,13 +6,14 @@ import (
 	"crypto/x509"
 	"errors"
 	"fmt"
+	"net/url"
+	"strconv"
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/net/proxy"
-	"net/url"
-	"strconv"
-	"time"
 )
 
 type ClientConfig struct {
@@ -150,8 +151,8 @@ func (c *ClientConfig) MongoClient() (*mongo.Client, error) {
 
 func getTLSConfig(ca []byte, verify bool) (*tls.Config, error) {
 	/* As of version 1.2.1, the MongoDB Go Driver will only use the first CA server certificate found in sslcertificateauthorityfile.
-	   The code below addresses this limitation by manually appending all server certificates found in sslcertificateauthorityfile
-	   to a custom TLS configuration used during client creation. */
+	The code below addresses this limitation by manually appending all server certificates found in sslcertificateauthorityfile
+	to a custom TLS configuration used during client creation. */
 
 	tlsConfig := new(tls.Config)
 

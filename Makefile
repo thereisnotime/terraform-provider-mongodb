@@ -40,7 +40,7 @@ re-install:
 	cd examples && rm -rf .terraform
 	cd examples && make init
 lint:
-	golangci-lint run
+	docker run --rm -v .:/app -w /app golangci/golangci-lint:v1.56.2 golangci-lint run -v
 
 
 documentdb-test:
